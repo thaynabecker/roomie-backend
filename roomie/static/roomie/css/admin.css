@@ -66,6 +66,10 @@ body {
   }
   
   /* Links */
+  li.addlink a {
+    color: #6F0A0C !important;
+  }
+
   a {
     color: white !important;
   }
@@ -83,10 +87,27 @@ body {
   
   th {
     background-color: #722E2F !important;
-    color: #333 !important;
+    color: #f5f5f5 !important;
     font-weight: bold;
   }
   
+  /*Específicos*/
+  div.breadcrumbs {
+    background-color: #6F0A0C;
+  }
+
+  .object-tools a:link, .object-tools a:visited {
+    background-color: #6F0A0C;
+    color: #f5f5f5 !important;
+  }
+
+  .selector-chosen-title {
+    background-color: #6F0A0C;
+  }
+  
+  .theme-toggle svg.theme-icon-when-auto, .theme-toggle svg.theme-icon-when-dark, .theme-toggle svg.theme-icon-when-light {
+    color: #6F0A0C;
+  }
   /* Rodapé */
   #footer {
     background-color: transparent !important;
