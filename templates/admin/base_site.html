@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'roomie/css/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+  <a href="{% url 'admin:index' %}">
+    <img src="{% static 'roomie/images/logo_nova.png' %}" alt="Logo Roomie" style="height: 70px; vertical-align: middle; margin-right: 10px;">
+    <span style="font-size: 24px; color: white;">Roomie Administração</span>
+  </a>
+{% endblock %}
