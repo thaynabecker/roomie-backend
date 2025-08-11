@@ -3,9 +3,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from roomie.views import RepublicaViewSet, UsuarioViewSet, AdministradorViewSet, DepartamentoViewSet, DespesaViewSet, PagamentoViewSet, TarefaViewSet, AdvertenciaViewSet, ChatMensagemViewSet
 
-admin.site.site_header = "Roomie Administração"
-admin.site.site_title = "Roomie Admin"
-admin.site.index_title = "Painel da República"
+from roomie.admin import myadmin
 
 router = DefaultRouter()
 router.register(r'republicas', RepublicaViewSet)
@@ -20,5 +18,5 @@ router.register(r'chatmensagens', ChatMensagemViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('admin/', admin.site.urls),
+    path('admin/', myadmin.urls),
 ]
