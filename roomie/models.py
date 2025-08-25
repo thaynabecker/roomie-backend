@@ -1,4 +1,37 @@
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 from django.db import models
+
+class UserManager(BaseUserManager):
+    """Manager for users."""
+    
+    use_in_migrations = True
+
+    def create_user(self, email, password=None, **extra_fields):
+        """Create, save and return a new user."""
+        if not email:
+            raise ValueError("Users must have an email address.")
+
+        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, email, password, username=None, **extra_fields):
+        """Create, save and return a new superuser."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(email, password, username=username, **extra_fields)
 
 class Republica(models.Model):
     nome_republica = models.CharField(max_length=100)
@@ -14,12 +47,25 @@ class Republica(models.Model):
         verbose_name_plural = "Repúblicas"
     
 class Usuario(models.Model):
+    username = models.CharField(max_length=255, unique=True, null=True, blank=True)
     nome = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
+    email = models.CharField(max_length=100, unique=True, null=True, blank=True)
     senha = models.CharField(max_length=100)
     data_nascimento = models.DateField()
     data_entrada = models.DateField()
     republica = models.ForeignKey(Republica, on_delete=models.PROTECT, related_name='usuarios')
+    
+    objects = UserManager()
+
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
+    EMAIL_FIELD = "email"
+
+    class Meta:
+        """Meta options for the model."""
+        verbose_name = "Usuário"
+        verbose_name_plural = "Usuários"
+
 
     def __str__(self):
         return self.nome    
