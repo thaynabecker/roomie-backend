@@ -5,6 +5,8 @@ from roomie.views import RepublicaViewSet, UsuarioViewSet, AdministradorViewSet,
 
 from roomie.admin import myadmin
 
+from roomie.auth import LoginUser, RegisterUser
+
 router = DefaultRouter()
 router.register(r'republicas', RepublicaViewSet)
 router.register(r'usuarios', UsuarioViewSet)
@@ -19,4 +21,6 @@ router.register(r'chatmensagens', ChatMensagemViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', myadmin.urls),
+    path("login/", LoginUser, name="login"),
+    path("register/", RegisterUser, name="register"),
 ]
