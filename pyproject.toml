@@ -3,7 +3,7 @@ name = "roomie-backend"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
-    {name = "thaynabecker", email = "thaynabecker.ifcaraquari"},
+    {name = "thaynabecker", email = "thaynabecker.ifcaraquari@gmail.com"},
     {name = "juliacdss", email = "juliacostaifc@gmail.com"},
 ]
 dependencies = [
