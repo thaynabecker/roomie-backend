@@ -1,20 +1,34 @@
-// server.js
-import express from 'express';
-import cookieParser from 'cookie-parser';
+// backend/server.js
 import dotenv from 'dotenv';
-import authRoutes from './routes/authGoogle.js';
-import calendarRoutes from './routes/calendar.js';
-import cors from 'cors';
+dotenv.config({ override: true }); // ⬅ precisa vir antes de qualquer import que use process.env
 
-dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import session from 'express-session';
+import authGoogleRouter from './routes/authGoogle.js';
+
 const app = express();
 
-app.use(cors({ origin: true, credentials: true }));
+// Middleware
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
-app.use(cookieParser());
 
-app.use(authRoutes);
-app.use(calendarRoutes);
+app.use(session({
+  secret: process.env.JWT_SECRET || 'roomie',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
 
+// Rotas
+app.use(authGoogleRouter);
+
+// Teste rápido
+app.get('/teste', (req, res) => res.send('Backend rodando!'));
+
+// Ouvir porta
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('Server on', PORT));
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
